@@ -36,6 +36,7 @@ class _ListaState extends State<Lista> {
     getData();
   }
 
+
   void getData() async {
     /////////////////////////////////////////
     /// Función con el objetivo de traer los datos
