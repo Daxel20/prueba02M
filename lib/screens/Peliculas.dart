@@ -44,11 +44,12 @@ class _ListaState extends State<Lista> {
     /// Función con el objetivo de traer los datos
     /////////////////////////////////////////
     
-    final response = await http.get(Uri.parse('https://jritsqmet.github.io/web-api/peliculas.json'));
+    final response = await http.get(Uri.parse('https://daxel20.github.io/peliculas/peliculas.json'));
 
     if (response.statusCode == 200) {
       // Decodificar el JSON y actualizar la lista
       updateProductList(json.decode(response.body));
+      print(json.decode(response.body));
     } else {
       throw Exception('Error al cargar los datos');
     }

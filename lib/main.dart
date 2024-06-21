@@ -1,30 +1,50 @@
-import 'package:app_muestra/screens/Login.dart';
-import 'package:app_muestra/screens/Peliculas.dart';
-import 'package:app_muestra/screens/Registro.dart';
-import 'package:app_muestra/screens/Series.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-Future<void> main() async {
+import 'package:firebase_core/firebase_core.dart';
+
+import 'screens/Login.dart';
+import 'screens/Peliculas.dart';
+import 'screens/Registro.dart';
+import 'screens/Series.dart';
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-        await Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: "My App",
-      home: Home(),
+      theme: ThemeData(
+        primarySwatch: Colors.amber,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Aplicacion Videos"),
+        ),
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                      'https://c4.wallpaperflare.com/wallpaper/760/459/710/aoi-ogata-anime-girls-wallpaper-preview.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Home(),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class Home extends StatefulWidget {
-  const Home({Key? key});
-
   @override
   State<Home> createState() => _HomeState();
 }
@@ -32,35 +52,19 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
 
+  final List<Widget> screens = [
+    Cuerpo(),
+    Login(),
+    Registro(),
+    Series(),
+    Peliculas(),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens = [
-      Cuerpo(context),
-      Login(),
-      Registro(),
-      Series(),
-      Peliculas()
-    ];
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Aplicacion Videos"),
-      ),
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage('https://c4.wallpaperflare.com/wallpaper/760/459/710/aoi-ogata-anime-girls-wallpaper-preview.jpg'), 
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Center(
-            child: screens[_currentIndex],
-          ),
-        ],
+      body: Center(
+        child: screens[_currentIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -78,17 +82,17 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(
             icon: Icon(Icons.accessibility_outlined),
             backgroundColor: Colors.amber,
-            label: "Registro",
+            label: "Login",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.auto_awesome_motion),
             backgroundColor: Colors.amber,
-            label: "Peliculas",
+            label: "Serie",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.airplay),
             backgroundColor: Colors.amber,
-            label: "Ver Peliculas",
+            label: "Peliculas",
             )
         ],
       ),
@@ -96,33 +100,37 @@ class _HomeState extends State<Home> {
   }
 }
 
-Widget Cuerpo(context) {
-  return Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Titulo(),
-        SizedBox(height: 20),
-        Boton1(context),
-        SizedBox(height: 20),
-        Boton5(context),
-        SizedBox(height: 20),
-        Boton2(context),
-        SizedBox(height: 20),
-        Boton3(context),
-        SizedBox(height: 20),
-        Boton4(context),
-        SizedBox(height: 20),
-        
-      ],
-    ),
-  );
+class Cuerpo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Titulo(),
+          SizedBox(height: 20),
+          Boton1(context),
+          SizedBox(height: 20),
+          Boton5(context),
+          SizedBox(height: 20),
+          Boton2(context),
+          SizedBox(height: 20),
+          Boton3(context),
+          SizedBox(height: 20),
+          Boton4(context),
+          SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
 }
 
 Widget Titulo() {
-  return const Text("Ve las mejores películas, donde y cuando quieras", textAlign: TextAlign.center, 
-   style: TextStyle(
-      color: Colors.white, 
+  return Text(
+    "Ve las mejores películas, donde y cuando quieras",
+    textAlign: TextAlign.center,
+    style: TextStyle(
+      color: Colors.white,
     ),
   );
 }
@@ -135,6 +143,7 @@ Widget Boton1(BuildContext context) {
     child: Text("Inicio"),
   );
 }
+
 Widget Boton5(BuildContext context) {
   return ElevatedButton(
     onPressed: () {

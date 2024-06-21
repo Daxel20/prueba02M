@@ -33,7 +33,12 @@ class _HomeState extends State<Home> {
         title: const Text('Login'),
       ),
        body: Stack(
+        fit: StackFit.expand, 
         children: [
+          Image.network(
+            'https://images.unsplash.com/photo-1594037733143-b23f9cc2e195?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            fit: BoxFit.cover,
+          ),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -53,6 +58,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+  
 }
 
 final TextEditingController _gmail = TextEditingController();
